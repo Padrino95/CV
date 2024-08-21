@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      :root {
+        --rojo: crimson;
+        --azul: steelblue;
+        --blanco: whitesmoke;
+        --borde: solid 1px black;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        font-size: 15px;
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 700px;
+        margin: auto;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      ul,
+      li {
+        list-style: none;
+      }
+
+      h1,
+      h2,
+      h3 {
+        text-transform: uppercase;
+        color: var(--rojo);
+      }
+
+      section#curriculum {
+        width: 1024px;
+        margin: auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border: solid 10px transparent;
+        border-radius: 15px;
+      }
+
+      section#curriculum div.foto img {
+        border-radius: 50%;
+      }
+
+      section#curriculum > div:not(:first-child) {
+        margin: 50px 0;
+        border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+        padding: 50px 0;
+      }
+
+      section#curriculum div h2::after {
+        content: "";
+        display: inline-block;
+        height: 4px;
+        width: 100px;
+        background: rgb(128, 124, 201);
+        background: linear-gradient(
+          90deg,
+          rgba(128, 124, 201, 1) 0%,
+          rgba(222, 231, 69, 1) 35%,
+          rgba(15, 25, 27, 0) 90%
+        );
+        border-radius: 40px;
+        margin-left: 20px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      footer button {
+        cursor: pointer;
+        border: none;
+        background-color: var(--rojo);
+        padding: 10px 20px;
+        color: var(--blanco);
+        border-radius: 20px;
+      }
+
+      .hidden {
+        display: none;
+      }
+      #nombre {
+        width: 233px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- (.foto>img[src=""])+div*4>(h2{titulo})+(ul>li{texto}*3) -->
+
+    <section id="formulario">
+      <form action="#" id="form">
+        <h2>Introduce tus datos en el formulario</h2>
+        <div class="personales">
+          <input type="text" placeholder="Tu nombre completo separado por ''-''" id="nombre" required/>
+          <input type="text" placeholder="Tu direccion" id="direccion" required/>
+          <input type="number" placeholder="Tu telefono" id="telefono" required/>
+          <input type="email" placeholder="Tu correo" id="correo" required />;
+        </div>
+        <div class="conocimientos">
+          <textarea id="lenguajes" cols="30" rows="10" placeholder="Tus conocimientos separados por ''-''" required ></textarea>
+        </div>
+        <div class="experiencia">
+          <textarea id="experiencia" cols="30" rows="10" placeholder="Tu experiencia separada por '',''" required ></textarea>
+        </div>
+        <div>
+          <input type="text" placeholder="URL de tu foto de perfil" id="URLfoto" required />
+        </div>
+        <input type="submit" id="enviar" />
+      </form>
+    </section>
+
+    <section id="curriculum" class="hidden">
+      <h1>Curriculum de</h1>
+      <div class="foto"><img src="" id="fotofinal" /></div>
+      <div class="datos">
+        <h2>Datos personales</h2>
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="conocimientos">
+        <h2>Conocimientos</h2>
+        <ul></ul>
+      </div>
+      <div class="experiencia">
+        <h2>Experiencia</h2>
+        <ul></ul>
+      </div>
+      <footer>
+        <div class="colores hidden">
+          <label for="color">
+            Cambiar tema:<input type="color" id="color" />
+          </label>
+        </div>
+        <div class="colores hidden">
+          <label for="color">
+            Cambiar tema:<input type="color" id="color" />
+          </label>
+        </div>
+        <div class="botones">
+          <button class="hidden">Enviar</button>
+          <button class="hidden imprimir">Imprimir</button>
+        </div>
+      </footer>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let enviar = document.querySelector("#enviar");
+        let formulario = document.querySelector("#formulario");
+        let curriculum = document.querySelector("#curriculum");
+
+        enviar.addEventListener("click", (e) => {
+          e.preventDefault();
+          formulario.classList.add("hidden");
+          curriculum.classList.remove("hidden");
+
+          let nombreyapellidos = document.querySelector("#nombre").value.split("-");
+          let direccion = document.querySelector("#direccion");
+          let telefono = document.querySelector("#telefono");
+          let email = document.querySelector("#correo");
+          let conocimientos = document.querySelector("#lenguajes").value.split("-");
+          let experiencia = document.querySelector("#experiencia").value.split(",");
+          let h1 = document.querySelector("#curriculum h1");
+          let button = document.querySelector(".botones :nth-child(1)");
+          let button2 = document.querySelector(".botones :nth-child(2)");
+          let rutafoto = document.querySelector("#URLfoto").value;
+          let color = document.querySelector(".colores");
+          let btnPrint = document.querySelector(".imprimir");
+
+          let foto = document.querySelector("#fotofinal");
+          let nombreF = document.querySelector(".datos ul>li:nth-child(1)");
+          let apellidoF = document.querySelector(".datos ul>li:nth-child(2)");
+          let direccionF = document.querySelector(".datos ul>li:nth-child(3)");
+          let telefonoF = document.querySelector(".datos ul>li:nth-child(4)");
+          let emailF = document.querySelector(".datos   ul>li:nth-child(5)");
+          let conocimientosF = document.querySelector(".conocimientos ul");
+          let experienciaF = document.querySelector(".experiencia ul");
+          let tema = document.querySelector("input[type='color']");
+          let h = document.querySelectorAll("h1,h2,h3");
+
+          let datos = {
+            nombre: nombreyapellidos,
+            apellidos: nombreyapellidos,
+            direccion: direccion.value,
+            telefono: telefono.value,
+            email: email.value,
+            conocimientos: conocimientos,
+            experiencia: experiencia,
+            foto: rutafoto,
+          };
+
+          //   datos personales
+          h1.innerHTML += `${datos.nombre[0]}`;
+          nombreF.innerHTML = `Nombre: ${datos.nombre[0]}`;
+          apellidoF.innerHTML = `Apellidos: ${datos.nombre[1]}`;
+          direccionF.innerHTML = `Direccion: ${datos.direccion}`;
+          telefonoF.innerHTML = `Telefono: ${datos.telefono}`;
+          emailF.innerHTML = `E-mail: ${datos.email}`;
+
+          //   foto
+          if (rutafoto == "") {
+            foto.setAttribute(
+              "src",
+              "data:image/jpeg;base64,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"
+            );
+          } else {
+            foto.setAttribute("src", datos.foto);
+          }
+
+          datos.conocimientos.forEach((conocimiento) => {
+            let li = document.createElement("li");
+            li.textContent = conocimiento;
+            conocimientosF.appendChild(li);
+          });
+
+          datos.experiencia.forEach((experiencia) => {
+            let li = document.createElement("li");
+            li.textContent = experiencia;
+            experienciaF.appendChild(li);
+          });
+
+          if (nombreyapellidos != "" && direccion != "" && telefono != "" && email != "" && conocimientos != "" && experiencia != "" ) {
+            //muestro los botones
+            button.classList.remove("hidden");
+            button2.classList.remove("hidden");
+            color.classList.remove("hidden");
+          }
+
+          //cambio de color
+          tema.addEventListener("change", (e) => {
+            h.forEach((element) => {
+              element.style.color = e.target.value;
+            });
+
+          });
+          btnPrint.addEventListener("click", e => {
+          window.print();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
